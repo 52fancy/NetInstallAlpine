@@ -23,18 +23,15 @@ sh <(curl -k 'https://cdn.jsdelivr.net/gh/52fancy/NetInstallAlpine/alpine.sh')
  fdisk -l
  ```
  
-- 挂载并保存SSH私钥
+- 挂载并允许root登录
  
  ```
  mount /dev/sda3 /mnt
- mkdir -p /mnt/root/.ssh
- chmod 700 /mnt/root/.ssh
- cp /root/.ssh/authorized_keys /mnt/root/.ssh/authorized_keys
- chmod 600 /mnt/root/.ssh/authorized_keys
+ sed -i "s/PermitRootLogin.*/PermitRootLogin yes/g" /mnt/etc/ssh/sshd_config
  umount /dev/sda3
  ```
  
-- 重启后使用私钥链接即可
+- 重启链接即可
 
  ```
  reboot
