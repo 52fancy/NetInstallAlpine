@@ -59,12 +59,12 @@ if [ $? -ne 0 ]; then
     exit
 fi
 
-if ! curl -k ${mirror}/${branch}/releases/${arch}/netboot/vmlinuz-${flavor} -o /boot/vmlinuz-${flavor}; then
+if ! curl -k -f -# ${mirror}/${branch}/releases/${arch}/netboot/vmlinuz-${flavor} -o /boot/vmlinuz-${flavor}; then
     echo "Failed to download file!"
     exit 
 fi
 
-if ! curl -k ${mirror}/${branch}/releases/${arch}/netboot/initramfs-${flavor} -o /boot/initramfs-${flavor}; then
+if ! curl -k -f -# ${mirror}/${branch}/releases/${arch}/netboot/initramfs-${flavor} -o /boot/initramfs-${flavor}; then
     echo "Failed to download file!"
     exit 
 fi
