@@ -39,7 +39,7 @@ fi
 echo "系统平台：${arch}"
 
 read -p "是否开启VIRTUAL[y/n]：" flavor
-if [ "${flavor}" = "y" ] || [ -z ${flavor} ]; then
+if [ "${flavor}" = "y" ] || [ "${flavor}" = "Y" ] || [ "${flavor}" = "yes" ]; then
     flavor=virt
     echo "开启VIRTUAL"
 else
