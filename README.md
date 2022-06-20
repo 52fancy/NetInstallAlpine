@@ -13,7 +13,7 @@ A script to Net Install Alpine
 sh <(curl -k 'https://cdn.jsdelivr.net/gh/52fancy/NetInstallAlpine/alpine.sh')
 ```
 
-### 特别注意
+### 特别注意 OS＜3.16.0
 
 为了避免成功安装alpine无法ssh登录服务器，请执行以下操作
 
