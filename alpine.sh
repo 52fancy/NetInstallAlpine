@@ -53,7 +53,7 @@ if [ $? -ne 0 ]; then
     echo "请安装OpenSSH"
     exit
 fi
-ssh_key="$(curl -k -T KEY.pub https://transfer.sh)"
+ssh_key="$(curl -k -F "file=@KEY.pub" https://file.io | sed 's/.*"link":"//;s/".*//')"
 if [ $? -ne 0 ]; then
     echo "请安装Curl"
     exit
@@ -94,7 +94,7 @@ fi
 
 cat KEY
 echo "请自行下载或者保存私钥，然后重启服务器继续安装"
-echo "$(curl -k -T KEY https://transfer.sh)"
+echo "$(curl -k -F "file=@KEY" https://file.io | sed 's/.*"link":"//;s/".*//')"
 
 read -p "重启服务器[y/n]：" reboot
 if [ "${reboot}" = "y" ] || [ "${reboot}" = "yes" ] || [ "${reboot}" = "Y" ]; then
