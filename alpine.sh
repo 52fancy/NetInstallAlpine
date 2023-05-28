@@ -59,12 +59,13 @@ if [ $? -ne 0 ]; then
     exit
 fi
 
-if ! curl -k -f -# ${mirror}/${branch}/releases/${arch}/netboot/vmlinuz-${flavor} -o /boot/vmlinuz-netboot; then
+version="$(curl -k ${mirror}/${branch}/releases/${arch}/latest-releases.yaml | grep version | sed -n 1p | sed 's/version: //g' | xargs echo -n)"
+if ! curl -k -f -# ${mirror}/${branch}/releases/${arch}/netboot/vmlinuz-${flavor} -o /boot/vmlinuz-${version}-netboot; then
     echo "Failed to download file!"
     exit 
 fi
 
-if ! curl -k -f -# ${mirror}/${branch}/releases/${arch}/netboot/initramfs-${flavor} -o /boot/initramfs-netboot; then
+if ! curl -k -f -# ${mirror}/${branch}/releases/${arch}/netboot/initramfs-${flavor} -o /boot/initramfs-${version}-netboot; then
     echo "Failed to download file!"
     exit 
 fi
@@ -76,8 +77,8 @@ exec tail -n +3 \$0
 # menu entries you want to add after this comment.  Be careful not to change
 # the 'exec tail' line above.
 menuentry 'Alpine' {
-    linux /boot/vmlinuz-netboot alpine_repo="${mirror}/${branch}/main" modloop="${mirror}/${branch}/releases/${arch}/netboot/modloop-${flavor}" modules="loop,squashfs" initrd="initramfs-netboot" console="${console}" ssh_key="${ssh_key}"
-    initrd /boot/initramfs-netboot
+    linux /boot/vmlinuz-${version}-netboot alpine_repo="${mirror}/${branch}/main" modloop="${mirror}/${branch}/releases/${arch}/netboot/modloop-${flavor}" modules="loop,squashfs" initrd="initramfs-${version}-netboot" console="${console}" ssh_key="${ssh_key}"
+    initrd /boot/initramfs-${version}-netboot
 }
 EOF
 
